@@ -9,3 +9,11 @@ export interface AuthResponse {
   token: string;
   user: User;
 }
+<<<<<<< HEAD
+=======
+
+export interface Category {
+  _id: string;
+  name: string;
+}
+>>>>>>> origin/jqk
