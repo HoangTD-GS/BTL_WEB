@@ -10,10 +10,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (!token) return;
+
     api
       .get<User>('/auth/me')
-      .then((res) => setUser(res.data))
-      .catch(() => localStorage.removeItem('token'))
+      .then(({ data }) => setUser(data))
+      .catch(() => {
+        localStorage.removeItem('token');
+        setUser(null);
+      })
       .finally(() => setLoading(false));
   }, []);
 

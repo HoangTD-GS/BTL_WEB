@@ -1,8 +1,23 @@
 import { Router } from 'express';
+import {
+  createRecipe,
+  deleteRecipe,
+  getAllRecipes,
+  getMyRecipes,
+  getRecipeById,
+  toggleLikeRecipe,
+  updateRecipe,
+} from '../controllers/recipe.controller.js';
+import { protect } from '../middleware/auth.js';
 
 const router = Router();
 
-// TODO: định nghĩa các endpoint cho /api/recipes
-router.get('/ping', (_req, res) => res.json({ ok: true, route: 'recipes' }));
+router.get('/', getAllRecipes);
+router.get('/my-recipes', protect, getMyRecipes);
+router.get('/:id', getRecipeById);
+router.post('/', protect, createRecipe);
+router.put('/:id', protect, updateRecipe);
+router.delete('/:id', protect, deleteRecipe);
+router.put('/:id/like', protect, toggleLikeRecipe);
 
 export default router;
