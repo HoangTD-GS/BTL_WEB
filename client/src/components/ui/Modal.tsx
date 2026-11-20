@@ -7,9 +7,10 @@ interface ModalProps {
   onClose: () => void;
   children: ReactNode;
   footer?: ReactNode;
+  className?: string;
 }
 
-export default function Modal({ open, title, onClose, children, footer }: ModalProps) {
+export default function Modal({ open, title, onClose, children, footer, className = '' }: ModalProps) {
   const titleId = useId();
   const dialogRef = useRef<HTMLDivElement>(null);
   // Giữ onClose mới nhất mà không làm effect chạy lại (tránh giành mất focus khi gõ)
@@ -44,7 +45,7 @@ export default function Modal({ open, title, onClose, children, footer }: ModalP
       }}
     >
       <div
-        className="modal"
+        className={`modal ${className}`.trim()}
         role="dialog"
         aria-modal="true"
         aria-labelledby={titleId}

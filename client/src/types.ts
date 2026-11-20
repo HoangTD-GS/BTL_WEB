@@ -42,11 +42,19 @@ export interface RecipeInput {
   description: string;
   ingredients: string[];
   steps: string[];
-  image?: string;
-  cookTime?: number;
-  servings?: number;
-  category?: string;
+  image: string;
+  cookTime: number;
+  servings: number;
+  /** Id danh mục; chuỗi rỗng = chưa phân loại */
+  category: string;
 }
+
+/** Công thức trong danh sách (có thêm số bình luận) */
+export interface RecipeListItem extends Recipe {
+  commentCount: number;
+}
+
+export type SortKey = 'newest' | 'oldest' | 'popular';
 
 export interface Comment {
   _id: string;
@@ -59,4 +67,5 @@ export interface Comment {
 export interface RecipeDetails {
   recipe: Recipe;
   comments: Comment[];
+  related: RecipeListItem[];
 }
