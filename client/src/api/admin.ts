@@ -1,5 +1,5 @@
 import api from './axios';
-import type { Category, User } from '../types';
+import type { Category, PersonRef, User } from '../types';
 
 export type Role = User['role'];
 
@@ -15,12 +15,6 @@ export interface PageQuery {
   page?: number;
   limit?: number;
   search?: string;
-}
-
-interface PersonRef {
-  _id: string;
-  name: string;
-  email: string;
 }
 
 export interface AdminUser {

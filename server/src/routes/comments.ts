@@ -1,8 +1,10 @@
 import { Router } from 'express';
+import { addComment, deleteComment } from '../controllers/comment.controller.js';
+import { protect } from '../middleware/auth.js';
 
 const router = Router();
 
-// TODO: định nghĩa các endpoint cho /api/comments
-router.get('/ping', (_req, res) => res.json({ ok: true, route: 'comments' }));
+router.post('/:recipeId', protect, addComment);
+router.delete('/:commentId', protect, deleteComment);
 
 export default router;

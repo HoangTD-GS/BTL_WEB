@@ -7,10 +7,10 @@ const recipeSchema = new mongoose.Schema(
     image: { type: String, default: '' },
     ingredients: [{ type: String, required: true }],
     steps: [{ type: String, required: true }],
-    cookTime: { type: Number, default: 0 }, // phút
+    cookTime: { type: Number, default: 0 },
     servings: { type: Number, default: 1 },
     author: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
-    category: { type: mongoose.Schema.Types.ObjectId, ref: 'Category' },
+    category: { type: mongoose.Schema.Types.ObjectId, ref: 'Category', default: null },
     likes: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
   },
   { timestamps: true }

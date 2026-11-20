@@ -1,4 +1,3 @@
-import type { JSX } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import CategoriesTab from '../components/admin/CategoriesTab';
 import CommentsTab from '../components/admin/CommentsTab';
@@ -15,34 +14,31 @@ const TABS = [
   { key: 'comments', label: 'Bình luận' },
 ] as const;
 
-export default function AdminDashboard(): JSX.Element {
-  // Tab hiện tại nằm trên URL (?tab=users) nên tải lại trang vẫn giữ nguyên tab
+export default function AdminDashboard() {
   const [params, setParams] = useSearchParams();
-  const current = TABS.find((t) => t.key === params.get('tab'))?.key ?? 'stats';
+  const current = TABS.find((tab) => tab.key === params.get('tab'))?.key ?? 'stats';
 
   return (
-    <div>
+    <section>
       <div className="page-header">
         <h1>Quản trị</h1>
         <p>Quản lý người dùng, danh mục và kiểm duyệt nội dung.</p>
       </div>
-
       <div className="tabs" role="tablist" aria-label="Các mục quản trị">
-        {TABS.map((t) => (
+        {TABS.map((tab) => (
           <button
-            key={t.key}
-            id={`tab-${t.key}`}
+            key={tab.key}
+            id={`tab-${tab.key}`}
             className="tab"
             role="tab"
-            aria-selected={current === t.key}
+            aria-selected={current === tab.key}
             aria-controls="admin-panel"
-            onClick={() => setParams({ tab: t.key })}
+            onClick={() => setParams({ tab: tab.key })}
           >
-            {t.label}
+            {tab.label}
           </button>
         ))}
       </div>
-
       <section id="admin-panel" role="tabpanel" aria-labelledby={`tab-${current}`}>
         {current === 'stats' && <StatsTab />}
         {current === 'users' && <UsersTab />}
@@ -50,6 +46,6 @@ export default function AdminDashboard(): JSX.Element {
         {current === 'recipes' && <RecipesTab />}
         {current === 'comments' && <CommentsTab />}
       </section>
-    </div>
+    </section>
   );
 }
