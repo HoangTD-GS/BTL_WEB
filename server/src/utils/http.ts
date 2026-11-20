@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import type { Response } from 'express';
+import type { Request, Response } from 'express';
 
 /**
  * Đặt mã trạng thái rồi ném lỗi. `errorHandler` (middleware/error.ts) sẽ trả
@@ -17,4 +17,10 @@ export function requireObjectId(res: Response, value: unknown, label = 'ID'): st
     fail(res, 400, `${label} không hợp lệ`);
   }
   return value;
+}
+
+/** Lấy người dùng đã đăng nhập (do middleware protect gắn vào), chưa đăng nhập thì trả 401. */
+export function requireUser(req: Request, res: Response) {
+  if (!req.user) fail(res, 401, 'Chưa đăng nhập');
+  return req.user;
 }
