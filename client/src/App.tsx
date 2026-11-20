@@ -26,6 +26,9 @@ export default function App() {
         <Route path="/saved" element={<ProtectedRoute><SavedRecipes /></ProtectedRoute>} />
         <Route path="/admin" element={<ProtectedRoute adminOnly><AdminDashboard /></ProtectedRoute>} />
         <Route path="*" element={<NotFound />} />
+        <Route path="/recipes/new" element={<RecipeForm />} />
+        <Route path="/recipes/edit/:id" element={<RecipeForm />} />
+        <Route path="/recipes/:id" element={<RecipeDetail />} />
       </Routes>
     </>
   );

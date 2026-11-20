@@ -7,7 +7,7 @@ const router = Router();
 
 router.get('/', async (req: Request, res: Response) => {
   try {
-    const recipes = await Recipe.find() 
+    const recipes = await Recipe.find()
       .populate('author', 'username')
       .sort({ createdAt: -1 });
     res.json(recipes);
@@ -39,13 +39,14 @@ router.get('/:id', async (req: Request, res: Response) => {
 
 router.post('/', protect, async (req: any, res: Response) => {
   try {
-    const { title, description, ingredients, steps, image } = req.body;
+    const { title, description, ingredients, steps, category, image, imageUrl } = req.body;
     const newRecipe = new Recipe({
       title,
       description,
       ingredients,
       steps,
-      image,
+      category,
+      image: image ?? imageUrl,
       author: req.user?._id
     });
     await newRecipe.save();
@@ -64,7 +65,18 @@ router.put('/:id', protect, async (req: any, res: Response) => {
       return res.status(403).json({ message: 'Bạn không có quyền sửa bài viết này' });
     }
 
-    const updated = await Recipe.findByIdAndUpdate(req.params.id, req.body, { new: true });
+    const { title, description, ingredients, steps, category, image, imageUrl } = req.body;
+    const updateData: Record<string, unknown> = {};
+    if (title !== undefined) updateData.title = title;
+    if (description !== undefined) updateData.description = description;
+    if (ingredients !== undefined) updateData.ingredients = ingredients;
+    if (steps !== undefined) updateData.steps = steps;
+    if (category !== undefined) updateData.category = category;
+    if (image !== undefined || imageUrl !== undefined) {
+      updateData.image = image ?? imageUrl;
+    }
+
+    const updated = await Recipe.findByIdAndUpdate(req.params.id, updateData, { new: true });
     res.json(updated);
   } catch (error: any) {
     res.status(400).json({ message: 'Lỗi cập nhật', error: error.message });
@@ -110,4 +122,3 @@ router.put('/:id/like', protect, async (req: any, res: Response) => {
 });
 
 export default router;
-

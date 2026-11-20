@@ -5,6 +5,7 @@ export interface IRecipe extends Document {
   description: string;
   ingredients: string[];
   steps: string[];
+  category?: string;
   image?: string;
   author: mongoose.Types.ObjectId;
   likes: mongoose.Types.ObjectId[];
@@ -17,6 +18,7 @@ const recipeSchema = new Schema<IRecipe>({
   description: { type: String, required: true },
   ingredients: [{ type: String, required: true }],
   steps: [{ type: String, required: true }],
+  category: { type: String },
   image: { type: String },
   author: { type: Schema.Types.ObjectId, ref: 'User', required: true },
   likes: [{ type: Schema.Types.ObjectId, ref: 'User' }]
