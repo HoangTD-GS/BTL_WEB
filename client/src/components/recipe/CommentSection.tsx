@@ -6,7 +6,8 @@ import { useAuth } from '../../context/useAuth';
 import { toast } from '../../store/useToastStore';
 import type { Comment, PersonRef } from '../../types';
 import { getErrorMessage } from '../../utils/errors';
-import { formatDate, initials, timeAgo } from '../../utils/format';
+import { formatDate, timeAgo } from '../../utils/format';
+import Avatar from '../ui/Avatar';
 import Button from '../ui/Button';
 import ConfirmDialog from '../ui/ConfirmDialog';
 import Textarea from '../ui/Textarea';
@@ -112,7 +113,7 @@ export default function CommentSection({ recipeId, recipeAuthorId, comments, onC
             const canDelete = Boolean(user && (person?._id === user._id || user.role === 'admin'));
             return (
               <li key={comment._id} className="comment-item">
-                <span className="avatar">{initials(name)}</span>
+                <Avatar name={name} size="sm" />
                 <div className="comment-body">
                   <div className="comment-head">
                     <strong>{name}</strong>
