@@ -1,8 +1,17 @@
 import { Router } from 'express';
+import {
+  createCategory,
+  deleteCategory,
+  getCategories,
+  updateCategory,
+} from '../controllers/categoryController.js';
+import { adminOnly, protect } from '../middleware/auth.js';
 
 const router = Router();
 
-// TODO: định nghĩa các endpoint cho /api/categories
-router.get('/ping', (_req, res) => res.json({ ok: true, route: 'categories' }));
+router.get('/', getCategories);
+router.post('/', protect, adminOnly, createCategory);
+router.put('/:id', protect, adminOnly, updateCategory);
+router.delete('/:id', protect, adminOnly, deleteCategory);
 
 export default router;
